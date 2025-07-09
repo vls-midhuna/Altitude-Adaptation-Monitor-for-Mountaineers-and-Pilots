@@ -6,7 +6,7 @@
 3. [Testing Plan (TRL-8 Readiness)](#testing-plan-trl-8-readiness)
 4. [Setup Steps](#setup-steps)
 5. [Circuit Diagram](#circuit-diagram)
-6. [Circuit Connections & Pinout Table](#circuit-connections-pinout-table)
+6. [Circuit Connections & Pinout Table](#circuit-connections--pinout-table)
 7. [Components Required with Bill of Materials](#components-required-with-bill-of-materials)
 ## Overview
 High-altitude environments pose significant health risks due to reduced oxygen levels and extreme weather conditions. Individuals such as trekkers, mountaineers, pilots, and military personnel are especially vulnerable to hypoxia, fatigue, and altitude sickness, which can lead to life-threatening situations if not detected early. Currently, there is a lack lightweight, real-time, wearable solutions that monitor vital signs specifically for such conditions.
