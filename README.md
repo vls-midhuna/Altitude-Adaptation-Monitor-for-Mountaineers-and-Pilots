@@ -1,5 +1,13 @@
 # Altitude Adaptation Monitor for Mountaineers and Pilots
  High-Altitude Health Monitoring– Continuous real-time tracking of SpO2, pulse, and temperature in  climbers, trekkers, pilots, and military personnel to detect early signs of altitude sickness, hypoxia, or  fatigue during ascent.
+ ## Table of Contents
+1. [Overview](#overview)
+2. [List of Sensors used](#list-of-sensors-used)
+3. [Testing Plan (TRL-8 Readiness)](#testing-plan-trl-8-readiness)
+4. [Setup Steps](#setup-steps)
+5. [Circuit Diagram](#circuit-diagram)
+6. [Circuit Connections & Pinout Table](#circuit-connections-pinout-table)
+7. [Components Required with Bill of Materials](#components-required-with-bill-of-materials)
 ## Overview
 High-altitude environments pose significant health risks due to reduced oxygen levels and extreme weather conditions. Individuals such as trekkers, mountaineers, pilots, and military personnel are especially vulnerable to hypoxia, fatigue, and altitude sickness, which can lead to life-threatening situations if not detected early. Currently, there is a lack lightweight, real-time, wearable solutions that monitor vital signs specifically for such conditions.
  
@@ -43,7 +51,6 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
 ## Circuit Diagram
 ![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/circuit_image.png)
 ## Circuit Connections & Pinout Table
-### Sensor/Module Pinout Table – ESP32
 | Sensor/Module                             | Microcontroller Pin (ESP32)                            | Function                                               |
 |-------------------------------------------|--------------------------------------------------------|--------------------------------------------------------|
 | **MAX30102**                              | SDA → GPIO21                                           | I2C Data (SpO₂ & Pulse)                                |
