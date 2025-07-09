@@ -31,7 +31,7 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
 ## Setup Steps
 **1. Assemble Hardware:** Connect all sensors (SpO₂, temperature, pressure) and modules (OLED, buzzer, GSM/Bluetooth) to the microcontroller as per the schematic.
 
-**2. Flash Firmware:** Upload the modular Arduino/ESP32 code using the Arduino IDE.
+**2. Flash Firmware:** Upload the modular ESP32 code using the Arduino IDE.
 
 **3. Install Mobile App (optional):** Pair the device with the companion Bluetooth app to view live vitals and export data.
 
@@ -42,6 +42,29 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
 **6. Test Outputs:** Verify vitals on the OLED and app, and test alert triggers for abnormal conditions.
 ## Circuit Diagram
 ![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/circuit_image.png)
+## Circuit Connections & Pinout Table
+### Sensor/Module Pinout Table – ESP32
+| Sensor/Module     | Microcontroller Pin (ESP32) | Function                   |
+|-------------------|-----------------------------|----------------------------|
+| **MAX30102**      | SDA → GPIO21                | I2C Data (SpO₂ & Pulse)    |
+|                   | SCL → GPIO22                | I2C Clock                  |
+|                   | VIN → 3.3V                  | Power Supply               |
+|                   | GND → GND                   | Ground                     |
+| **MLX90614**      | SDA → GPIO21                | I2C Data (Temperature)     |
+|                   | SCL → GPIO22                | I2C Clock                  |
+|                   | VIN → 3.3V                  | Power Supply               |
+|                   | GND → GND                   | Ground                     |
+| **BMP390**        | SDA → GPIO21                | I2C Data (Altitude)        |
+|                   | SCL → GPIO22                | I2C Clock                  |
+|                   | VIN → 3.3V                  | Power Supply               |
+|                   | GND → GND                   | Ground                     |
+| **OLED Display**  | SDA → GPIO21                | I2C Data (Display)         |
+|                   | SCL → GPIO22                | I2C Clock                  |
+| **Buzzer**        | GPIO5                       | Alert Signal Output        |
+|                   | VCC → 3.3V                  | Power Supply               |
+|                   | GND → GND                   | Ground                     |
+| **Battery (LiPo)**| VIN → 5V                    | Main Power Input           |
+|                   | GND → GND                   | Common Ground              |
 
 
 
