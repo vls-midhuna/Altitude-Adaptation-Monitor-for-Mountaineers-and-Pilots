@@ -44,27 +44,27 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
 ![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/circuit_image.png)
 ## Circuit Connections & Pinout Table
 ### Sensor/Module Pinout Table – ESP32
-| Sensor/Module     | Microcontroller Pin (ESP32) | Function                   |
-|-------------------|-----------------------------|----------------------------|
-| **MAX30102**      | SDA → GPIO21                | I2C Data (SpO₂ & Pulse)    |
-|                   | SCL → GPIO22                | I2C Clock                  |
-|                   | VIN → 3.3V                  | Power Supply               |
-|                   | GND → GND                   | Ground                     |
-| **MLX90614**      | SDA → GPIO21                | I2C Data (Temperature)     |
-|                   | SCL → GPIO22                | I2C Clock                  |
-|                   | VIN → 3.3V                  | Power Supply               |
-|                   | GND → GND                   | Ground                     |
-| **BMP390**        | SDA → GPIO21                | I2C Data (Altitude)        |
-|                   | SCL → GPIO22                | I2C Clock                  |
-|                   | VIN → 3.3V                  | Power Supply               |
-|                   | GND → GND                   | Ground                     |
-| **OLED Display**  | SDA → GPIO21                | I2C Data (Display)         |
-|                   | SCL → GPIO22                | I2C Clock                  |
-| **Buzzer**        | GPIO5                       | Alert Signal Output        |
-|                   | VCC → 3.3V                  | Power Supply               |
-|                   | GND → GND                   | Ground                     |
-| **Battery (LiPo)**| VIN → 5V                    | Main Power Input           |
-|                   | GND → GND                   | Common Ground              |
+| Sensor/Module                             | Microcontroller Pin (ESP32)                            | Function                                               |
+|-------------------------------------------|--------------------------------------------------------|--------------------------------------------------------|
+| **MAX30102**                              | SDA → GPIO21                                           | I2C Data (SpO₂ & Pulse)                                |
+|                                           | SCL → GPIO22                                           | I2C Clock                                              |
+|                                           | VIN → 3.3V                                             | Power Supply                                           |
+|                                           | GND → GND                                              | Ground                                                 |
+| **MLX90614**                              | SDA → GPIO21                                           | I2C Data (Temperature)                                 |
+|                                           | SCL → GPIO22                                           | I2C Clock                                              |
+|                                           | VIN → 3.3V                                             | Power Supply                                           |
+|                                           | GND → GND                                              | Ground                                                 |
+| **BMP390**                                | SDA → GPIO21                                           | I2C Data (Altitude)                                    |
+|                                           | SCL → GPIO22                                           | I2C Clock                                              |
+|                                           | VIN → 3.3V                                             | Power Supply                                           |
+|                                           | GND → GND                                              | Ground                                                 |
+| **OLED Display**                          | SDA → GPIO21                                           | I2C Data (Display)                                     |
+|                                           | SCL → GPIO22                                           | I2C Clock                                              |
+| **Buzzer**                                | GPIO5                                                  | Alert Signal Output                                    |
+|                                           | VCC → 3.3V                                             | Power Supply                                           |
+|                                           | GND → GND                                              | Ground                                                 |
+| **Battery (LiPo)**                        | VIN → 5V                                               | Main Power Input                                       |
+|                                           | GND → GND                                              | Common Ground                                          |
 
 
 
