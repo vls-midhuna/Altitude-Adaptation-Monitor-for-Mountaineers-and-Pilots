@@ -40,6 +40,8 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
 **5. Power the System:** Use a Li-ion battery with TP4056 charging module or USB power.
 
 **6. Test Outputs:** Verify vitals on the OLED and app, and test alert triggers for abnormal conditions.
+## Circuit Diagram
+![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/circuit_image.png)
 
 
 
