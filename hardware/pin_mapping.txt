@@ -1,0 +1,25 @@
+BME280:
+  SDA → GPIO 21
+  SCL → GPIO 22
+  VCC → 3.3V
+  GND → GND
+
+Max30102:
+  SDA → GPIO 21
+  SCL → GPIO 22
+  VCC → 3.3V
+  GND → GND
+MLX90614:
+  SDA → GPIO 21
+  SCL → GPIO 22
+  VCC → 3.3V
+  GND → GND
+OLED:
+  SDA → GPIO 21
+  SCL → GPIO 22
+  VCC → 3.3V
+  GND → GND
+Buzzer:
+  VCC → 3.3V
+  GND → GND
+  Signal → GPIO 5
