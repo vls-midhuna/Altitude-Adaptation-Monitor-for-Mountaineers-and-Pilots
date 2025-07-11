@@ -334,6 +334,125 @@ String SendHTML(float temperature,float Heart_Beat,float IR_value,float pressure
   return ptr;
 }
 ```
+### For Plots
+```
+% Load the CSV file
+data = readtable('travis.csv');
+
+% Convert Time from milliseconds to hours
+time_hours = data.Millis / (1000 * 60 * 60);  % ms → hours
+
+% Extract altitude data
+altitude = data.Altitude;
+
+% Plot altitude drift
+figure('Color', 'w');
+plot(time_hours, altitude, 'm-', 'LineWidth', 1.5);
+xlabel('Time (hours)', 'FontSize', 14);
+ylabel('Altitude (m)', 'FontSize', 14);
+title('Altitude Drift Over Time (in Hours)', 'FontSize', 16, 'FontWeight', 'bold');
+grid on;
+
+% Beautify axes
+set(gca, 'FontSize', 12);
+xlim([0 max(time_hours)]);
+box on;
+```
+```
+% Load the CSV file
+data = readtable('travis.csv');
+
+% Convert Time from milliseconds to hours
+time_hours = data.Millis / (1000 * 60 * 60);  % ms → hours
+
+% Extract humidity data
+humidity = data.Humidity;
+
+% Plot humidity drift
+figure('Color', 'w');
+plot(time_hours, humidity, 'g-', 'LineWidth', 1.5);
+xlabel('Time (hours)', 'FontSize', 14);
+ylabel('Humidity (%)', 'FontSize', 14);
+title('Humidity Drift Over Time (in Hours)', 'FontSize', 16, 'FontWeight', 'bold');
+grid on;
+
+% Beautify axes
+set(gca, 'FontSize', 12);
+xlim([0 max(time_hours)]);
+box on;
+```
+```
+% Load the CSV file
+data = readtable('travis.csv');
+
+% Convert Time from milliseconds to hours
+time_hours = data.Millis / (1000 * 60 * 60);  % ms → hours
+
+% Extract IR Value data
+ir_value = data.IRValue;
+
+% Plot IR Value drift
+figure('Color', 'w');
+plot(time_hours, ir_value, 'k-', 'LineWidth', 1.5);
+xlabel('Time (hours)', 'FontSize', 14);
+ylabel('IR Value', 'FontSize', 14);
+title('IR Sensor Drift Over Time (in Hours)', 'FontSize', 16, 'FontWeight', 'bold');
+grid on;
+
+% Beautify axes
+set(gca, 'FontSize', 12);
+xlim([0 max(time_hours)]);
+box on;
+```
+```
+% Load the CSV file
+data = readtable('travis.csv');
+
+% Convert Time from milliseconds to hours
+time_hours = data.Millis / (1000 * 60 * 60);  % ms → hours
+
+% Extract pressure data
+pressure = data.Pressure;
+
+% Plot pressure drift
+figure('Color', 'w');
+plot(time_hours, pressure, 'b-', 'LineWidth', 1.5);
+xlabel('Time (hours)', 'FontSize', 14);
+ylabel('Pressure (hPa)', 'FontSize', 14);
+title('Pressure Drift Over Time (in Hours)', 'FontSize', 16, 'FontWeight', 'bold');
+grid on;
+
+% Beautify axes
+set(gca, 'FontSize', 12);
+xlim([0 max(time_hours)]);
+box on;
+```
+```
+% Load the CSV file
+data = readtable('travis.csv');
+
+% Display column names (optional)
+% disp(data.Properties.VariableNames)
+
+% Convert Time from milliseconds to hours
+time_hours = data.Millis / (1000 * 60 * 60);  % ms → hours
+
+% Extract temperature data
+temperature = data.Temperature;
+
+% Plot temperature drift
+figure('Color', 'w');
+plot(time_hours, temperature, 'r-', 'LineWidth', 1.5);
+xlabel('Time (hours)', 'FontSize', 14);
+ylabel('Temperature (°C)', 'FontSize', 14);
+title('Temperature Drift Over Time (in Hours)', 'FontSize', 16, 'FontWeight', 'bold');
+grid on;
+
+% Beautify axes
+set(gca, 'FontSize', 12);
+xlim([0 max(time_hours)]);
+box on;
+```
 ## Circuit Connections & Pinout Table
 | Sensor/Module                             | Microcontroller Pin (ESP32)                            | Function                                               |
 |-------------------------------------------|--------------------------------------------------------|--------------------------------------------------------|
