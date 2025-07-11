@@ -1,0 +1,21 @@
+% Load the CSV file
+data = readtable('travis.csv');
+
+% Convert Time from milliseconds to hours
+time_hours = data.Millis / (1000 * 60 * 60);  % ms → hours
+
+% Extract IR Value data
+ir_value = data.IRValue;
+
+% Plot IR Value drift
+figure('Color', 'w');
+plot(time_hours, ir_value, 'k-', 'LineWidth', 1.5);
+xlabel('Time (hours)', 'FontSize', 14);
+ylabel('IR Value', 'FontSize', 14);
+title('IR Sensor Drift Over Time (in Hours)', 'FontSize', 16, 'FontWeight', 'bold');
+grid on;
+
+% Beautify axes
+set(gca, 'FontSize', 12);
+xlim([0 max(time_hours)]);
+box on;

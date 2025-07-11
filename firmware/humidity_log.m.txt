@@ -1,0 +1,21 @@
+% Load the CSV file
+data = readtable('travis.csv');
+
+% Convert Time from milliseconds to hours
+time_hours = data.Millis / (1000 * 60 * 60);  % ms → hours
+
+% Extract humidity data
+humidity = data.Humidity;
+
+% Plot humidity drift
+figure('Color', 'w');
+plot(time_hours, humidity, 'g-', 'LineWidth', 1.5);
+xlabel('Time (hours)', 'FontSize', 14);
+ylabel('Humidity (%)', 'FontSize', 14);
+title('Humidity Drift Over Time (in Hours)', 'FontSize', 16, 'FontWeight', 'bold');
+grid on;
+
+% Beautify axes
+set(gca, 'FontSize', 12);
+xlim([0 max(time_hours)]);
+box on;
