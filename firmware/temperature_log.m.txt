@@ -1,5 +1,5 @@
 % Load the CSV file
-data = readtable('travis.csv');
+data = readtable('24hrs_log.csv');
 
 % Display column names (optional)
 % disp(data.Properties.VariableNames)
