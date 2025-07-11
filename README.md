@@ -15,6 +15,8 @@ High-Altitude Health Monitoring – Continuous real-time monitoring of vital sig
 9. [Working Code](#working-code)
 10. [Working Code for plotting](#for-plots)
 11. [Plots](#plots)
+12. [Demonstration](#demonstration-video)
+13. [Indian Sensor Substitution Plan](#indian-sensor-substitution-plan)
 ## Overview
 High-altitude environments pose serious health risks due to low oxygen levels, decreased air pressure, and extreme weather conditions. Trekkers, mountaineers, pilots, and military personnel are particularly susceptible to altitude-related illnesses such as acute mountain sickness (AMS), high-altitude pulmonary edema (HAPE), high-altitude cerebral edema (HACE), hypoxia, severe fatigue, and decompression sickness. If not detected and managed early, these conditions can quickly become life-threatening.
 
@@ -504,7 +506,23 @@ box on;
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/heartbeat_accuracy.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/humidity_drift.png" alt="image" width="600" height="600"/>
 
+## Demonstration
+https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/demo/demo_video.mp4
 
+## Indian Sensor Substitution Plan
+ To support Atmanirbhar Bharat, the prototype is designed to work with both imported and future Indian-made sensors.
+ - It uses standard interfaces like I2C, UART, and analog input, which allows new sensors to be added or replaced easily without changing the main circuit.
+ - The firmware follows a modular structure, so the code for one sensor can be replaced with another with minimal effort.
+ - A calibration and validation layer is included to ensure Indian sensor replacements can be fine-tuned and verified for medical accuracy.
+ Some possible Indian sensor alternatives include:
+
+**SpO₂&Pulse:** Upcoming biosensors developed by BEL, DRDO, or Indian health-tech startups
+
+ **Temperature:** Analog thermistors or infrared sensors made by Indian electronics suppliers
+ 
+ **Pressure/Altitude:** Sensors built by Indian MSMEs or labs like SAMEER
+ 
+ To encourage local innovation, open hardware documents will be shared with Indian manufacturers so they can easily develop compatible sensor boards.
 
 
 
