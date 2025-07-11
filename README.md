@@ -65,9 +65,9 @@ By integrating accurate sensors and real-time feedback mechanisms, this system e
 
 **6. Test Outputs:** Verify vitals on the OLED and app, and test alert triggers for abnormal conditions.
 ## Circuit Diagram
-![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/circuit_image.png)
+![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/hardware/circuit_image.png)
 ## Schematic Diagram
-![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/schematic.png)
+![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/hardware/schematic.png)
 
 ## Circuit Connections & Pinout Table
 | Sensor/Module                             | Microcontroller Pin (ESP32)                            | Function                                               |
