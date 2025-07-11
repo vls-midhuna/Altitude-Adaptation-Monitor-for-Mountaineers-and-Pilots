@@ -490,6 +490,17 @@ set(gca, 'FontSize', 12);
 xlim([0 max(time_hours)]);
 box on;
 ```
+## Plots
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Humidity%20vs%20Altitude.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/IRvalue_drift.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Pressure%20vs%20Altitude.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Pressure_drift.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Temperature%20vs%20Altitude.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Temperature_drift.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/altitude_drift.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/heartbeat_accuracy.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/humidity_drift.png" alt="image" width="600" height="600"/>
+
 
 
 
