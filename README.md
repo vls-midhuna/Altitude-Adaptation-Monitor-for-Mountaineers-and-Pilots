@@ -498,7 +498,7 @@ box on;
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/IRvalue_drift.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Pressure%20vs%20Altitude.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Pressure_drift.png" alt="image" width="600" height="600"/>
-<img src="http://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Temperature%20vs%20Altitude.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Temperature%20vs%20Altitude.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Temperature_drift.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/altitude_drift.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/heartbeat_accuracy.png" alt="image" width="600" height="600"/>
