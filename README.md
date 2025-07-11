@@ -99,7 +99,7 @@ By integrating accurate sensors and real-time feedback mechanisms, this system e
 ## Components Required with Bill of Materials
 | Item                   | Quantity | Component Type                                                  | Links to Products                                      |
 |------------------------|----------|---------------------------------------------------------------|---------------------------------------------------|
-| ESP32                | 1        | Compute Board                                        | [ESP32](https://www.amazon.in/SquadPixel-ESP-32-Bluetooth-Development-Board/dp/B071XP56LM/ref=sr_1_3?crid=30OQ5YCZ7Q4KW&dib=eyJ2IjoiMSJ9.T_X5Nbn2mH9dvueGcGZsRnpQ3ld-76jj025S_E4B1hx1ijLrgyL_MqLj3ZU8IanjZI4xvPXs0Y9rN4BZ09s50feUMPRKnqJ_n-L8xLixFu8scZX_-tTMVspW0pFff4rdfPQ58Pjcu9g1mEGBDamzlQTKpMXK5WyJ5Iqw_A_TxaM1b7qDIwLaswDF4N9mztGcv76mVskriXcr6FF9txQwp-2jIfWcw4naIKjp1o0g_dM.WDVWcdLAfxQ2A5v6M3I7pJrT7izNHQz-rF6vF3qEtjM&dib_tag=se&keywords=esp32+board&qid=1752078531&sprefix=%2Caps%2C375&sr=8-3)           |
+| ESP32                | 1        | Compute Board                                        | [ESP32](https://robu.in/product/esp32-38pin-development-board-wifibluetooth-ultra-low-power-consumption-dual-core/)           |
 | MAX30102            | 1        | SpO₂ & Heart Rate  | [MAX30102](https://robu.in/product/max30102-heart-rate-and-pulse-oximeter-sensor-module-black/)        |
 | MLX90614(IR)            | 1        |Temperature Sensor | [MLX90614](https://robu.in/product/mlx90614-esf-non-contact-human-body-infrared-temperature-measurement-module/)       |
 | BME280            | 1        | Altimeter  | [BME280](https://robu.in/product/gy-bme280-5v-temperature-and-humidity-sensor/)        |
