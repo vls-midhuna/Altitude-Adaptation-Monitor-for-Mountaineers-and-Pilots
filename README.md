@@ -18,7 +18,7 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
  - **ESP32**              : Main controller with Bluetooth + Wi-Fi
 - **MAX30102**            : Measures blood oxygen saturation and pulse rate
 - **MLX90614(IR)**        : Non-contact body temperature measurement
-- **BMP390**              : Measures altitude and atmospheric pressure
+- **BME280**              : Measures altitude and atmospheric pressure
 - **0.96" OLED Display**  : Shows real-time vitals on-device
 - **5V Piezo Buzzer**     : Audio alert for critical conditions
 - **3.7V Li-Po + TP4056** :  Power supply with rechargeable module
@@ -41,7 +41,7 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
 
 **2. Flash Firmware:** Upload the modular ESP32 code using the Arduino IDE.
 
-**3. Install Mobile App (optional):** Pair the device with the companion Bluetooth app to view live vitals and export data.
+**3. Start Web Dashboard**: Connect the device to Wi-Fi and access a built-in web server via browser to monitor live vitals and download data logs.
 
 **4. Calibrate Sensors:** Use known reference values to fine-tune sensor readings for accuracy.
 
@@ -61,7 +61,7 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
 |                                           | SCL → GPIO22                                           | I2C Clock                                              |
 |                                           | VIN → 3.3V                                             | Power Supply                                           |
 |                                           | GND → GND                                              | Ground                                                 |
-| **BMP390**                                | SDA → GPIO21                                           | I2C Data (Altitude)                                    |
+| **BME280**                                | SDA → GPIO21                                           | I2C Data (Altitude)                                    |
 |                                           | SCL → GPIO22                                           | I2C Clock                                              |
 |                                           | VIN → 3.3V                                             | Power Supply                                           |
 |                                           | GND → GND                                              | Ground                                                 |
@@ -78,7 +78,7 @@ The monitoring goal is to offer users an easy-to-use, reliable system that helps
 | ESP32                | 1        | Compute Board                                        | [ESP32](https://www.amazon.in/SquadPixel-ESP-32-Bluetooth-Development-Board/dp/B071XP56LM/ref=sr_1_3?crid=30OQ5YCZ7Q4KW&dib=eyJ2IjoiMSJ9.T_X5Nbn2mH9dvueGcGZsRnpQ3ld-76jj025S_E4B1hx1ijLrgyL_MqLj3ZU8IanjZI4xvPXs0Y9rN4BZ09s50feUMPRKnqJ_n-L8xLixFu8scZX_-tTMVspW0pFff4rdfPQ58Pjcu9g1mEGBDamzlQTKpMXK5WyJ5Iqw_A_TxaM1b7qDIwLaswDF4N9mztGcv76mVskriXcr6FF9txQwp-2jIfWcw4naIKjp1o0g_dM.WDVWcdLAfxQ2A5v6M3I7pJrT7izNHQz-rF6vF3qEtjM&dib_tag=se&keywords=esp32+board&qid=1752078531&sprefix=%2Caps%2C375&sr=8-3)           |
 | MAX30102            | 1        | SpO₂ & Heart Rate  | [MAX30102](https://robu.in/product/max30102-heart-rate-and-pulse-oximeter-sensor-module-black/)        |
 | MLX90614(IR)            | 1        |Temperature Sensor | [MLX90614](https://robu.in/product/mlx90614-esf-non-contact-human-body-infrared-temperature-measurement-module/)       |
-| BMP390            | 1        | Altimeter  | [BMP390](https://robu.in/product/bmp390-precision-barometric-pressure-and-altimeter/)        |
+| BME280            | 1        | Altimeter  | [BME280](https://robu.in/product/gy-bme280-5v-temperature-and-humidity-sensor/)        |
 | 0.96" OLED Display    | 1| Display| [0.96" OLED Display](https://robu.in/product/0-96-oled-display-module/)|
 | 5V Piezo Buzzer        | 1|   Buzzer    | [5V Piezo Buzzer](https://robu.in/product/5v-active-alarm-buzzer-module-arduino/)       |
 | 3.7V Li-Po Battery         | 1| Battery | [Battery](https://www.amazon.in/Bhajanlal-Greenery-Rechargeable-Lithium-Batteries/dp/B0CYQ6H8FW/ref=sr_1_2_sspa?crid=2NFOCZQ40NE5W&dib=eyJ2IjoiMSJ9.OnAqIhrvsN6XrdG3yugPQGaeXTvkB708agMQ3pN4un5bHFupxT-0Haiyeb3CWMa1OuJoGwLQmbjygzAOmDC7AJq6vL_9z93u3JbfO3ViGRv9UcUZGzkfguYX6lpsL57lqOoRnmAcxPzmiRzC3wEjJloS1SSI2_cuhs-_ypaiOF_9dHka0CAJfwPA_ak6ifWNsK8W02wKp2u_UBTDW76bMcxHAr9lxxGVHTTAmINru-w.ggYwBbw2LCEuiLELBymDRuCwLWsE3pA9a0ZKZeYztBE&dib_tag=se&keywords=li+po+battery+3.7v&qid=1752079402&sprefix=li+po%2Caps%2C287&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1)        |
