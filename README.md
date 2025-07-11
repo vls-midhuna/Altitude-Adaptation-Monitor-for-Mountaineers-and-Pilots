@@ -6,8 +6,9 @@ High-Altitude Health Monitoring – Continuous real-time monitoring of vital sig
 3. [Testing Plan (TRL-8 Readiness)](#testing-plan-trl-8-readiness)
 4. [Setup Steps](#setup-steps)
 5. [Circuit Diagram](#circuit-diagram)
-6. [Circuit Connections & Pinout Table](#circuit-connections--pinout-table)
-7. [Components Required with Bill of Materials](#components-required-with-bill-of-materials)
+6. [Schematic Diagram](#schematic-diagram)
+7. [Circuit Connections & Pinout Table](#circuit-connections--pinout-table)
+8. [Components Required with Bill of Materials](#components-required-with-bill-of-materials)
 ## Overview
 High-altitude environments pose serious health risks due to low oxygen levels, decreased air pressure, and extreme weather conditions. Trekkers, mountaineers, pilots, and military personnel are particularly susceptible to altitude-related illnesses such as acute mountain sickness (AMS), high-altitude pulmonary edema (HAPE), high-altitude cerebral edema (HACE), hypoxia, severe fatigue, and decompression sickness. If not detected and managed early, these conditions can quickly become life-threatening.
 
@@ -62,6 +63,8 @@ By integrating accurate sensors and real-time feedback mechanisms, this system e
 **6. Test Outputs:** Verify vitals on the OLED and app, and test alert triggers for abnormal conditions.
 ## Circuit Diagram
 ![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/circuit_image.png)
+## Schematic Diagram
+![image](https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/schematic.png)
 ## Circuit Connections & Pinout Table
 | Sensor/Module                             | Microcontroller Pin (ESP32)                            | Function                                               |
 |-------------------------------------------|--------------------------------------------------------|--------------------------------------------------------|
