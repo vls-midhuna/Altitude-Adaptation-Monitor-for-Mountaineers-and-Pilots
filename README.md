@@ -514,6 +514,7 @@ https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-
  - It uses standard interfaces like I2C, UART, and analog input, which allows new sensors to be added or replaced easily without changing the main circuit.
  - The firmware follows a modular structure, so the code for one sensor can be replaced with another with minimal effort.
  - A calibration and validation layer is included to ensure Indian sensor replacements can be fine-tuned and verified for medical accuracy.
+   
  Some possible Indian sensor alternatives include:
 
 **SpO₂&Pulse:** Upcoming biosensors developed by BEL, DRDO, or Indian health-tech startups
