@@ -506,7 +506,7 @@ box on;
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/heartbeat_accuracy.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/humidity_drift.png" alt="image" width="600" height="600"/>
 
-## Demonstration
+## Demonstration Video
 https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/demo/demo_video.mp4
 
 ## Indian Sensor Substitution Plan
