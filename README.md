@@ -2,6 +2,7 @@
 High-Altitude Health Monitoring – Continuous real-time monitoring of vital signs (pulse, body temperature) and environmental parameters (altitude, atmospheric pressure, humidity, and ambient temperature) to identify early signs of altitude sickness, hypoxia, and fatigue during ascent.
 
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/product.png" alt="image" width="600" height="600"/>
+
  ## Table of Contents
 1. [Overview](#overview)
 2. [List of Sensors used](#list-of-sensors-used)
