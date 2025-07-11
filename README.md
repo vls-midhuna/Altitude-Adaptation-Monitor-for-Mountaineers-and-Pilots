@@ -1,5 +1,5 @@
 # Altitude Adaptation Monitor for Mountaineers and Pilots
- High-Altitude Health Monitoring– Continuous real-time tracking of SpO2, pulse, and temperature in  climbers, trekkers, pilots, and military personnel to detect early signs of altitude sickness, hypoxia, or  fatigue during ascent.
+High-Altitude Health Monitoring – Continuous real-time monitoring of vital signs (pulse, body temperature) and environmental parameters (altitude, atmospheric pressure, humidity, and ambient temperature) to identify early signs of altitude sickness, hypoxia, and fatigue during ascent.
  ## Table of Contents
 1. [Overview](#overview)
 2. [List of Sensors used](#list-of-sensors-used)
@@ -9,13 +9,25 @@
 6. [Circuit Connections & Pinout Table](#circuit-connections--pinout-table)
 7. [Components Required with Bill of Materials](#components-required-with-bill-of-materials)
 ## Overview
-High-altitude environments pose significant health risks due to reduced oxygen levels and extreme weather conditions. Individuals such as trekkers, mountaineers, pilots, and military personnel are especially vulnerable to hypoxia, fatigue, and altitude sickness, which can lead to life-threatening situations if not detected early. Currently, there is a lack lightweight, real-time, wearable solutions that monitor vital signs specifically for such conditions.
- 
-The proposed solution is a compact, wearable health monitoring system that continuously tracks SpO₂ (oxygen saturation), heart rate, and body temperature to assess the user's physiological adaptation to high altitudes. Optional integration of an altimeter (BMP390) allows for altitude-aware alerts, enhancing the contextual relevance of health data. The system provides real-time feedback through LEDs, buzzers, and a Bluetooth-connected mobile app for immediate awareness and action.
- 
-The monitoring goal is to offer users an easy-to-use, reliable system that helps prevent altitude related health risks by issuing threshold-based alerts before symptoms become severe. This ensures safer ascents, improved performance, and timely interventions in remote environments.
+High-altitude environments pose serious health risks due to low oxygen levels, decreased air pressure, and extreme weather conditions. Trekkers, mountaineers, pilots, and military personnel are particularly susceptible to altitude-related illnesses such as acute mountain sickness (AMS), high-altitude pulmonary edema (HAPE), high-altitude cerebral edema (HACE), hypoxia, severe fatigue, and decompression sickness. If not detected and managed early, these conditions can quickly become life-threatening.
+
+The proposed solution is a compact, wearable health monitoring system that continuously tracks key physiological parameters and environmental conditions using the following sensors:
+- MAX30102 for heart rate monitoring
+- MLX90614 for non-contact body temperature measurement
+- BME280 for altitude, atmospheric pressure, humidity, and environment temperature
+- The system also includes a 0.96-inch OLED display for real-time data visualization, allowing users to immediately view their vital signs and surrounding environmental conditions without needing an external device.
+
+The system helps detect early signs of:
+- Hypoxia: Reflected through abnormal heart rate and body temperature fluctuations at increasing altitudes
+- Fatigue and Overexertion: Indicated by sustained elevated heart rate and rising body temperature
+- Decompression Sickness: Assessed by correlating sudden altitude changes with vital sign variations
+- High-altitude illnesses (AMS, HAPE, HACE): Identified through combined trends in physiological stress and environmental conditions
+
+For remote monitoring, a mobile application hosts an internet-based web server that provides continuous access to live health data from any connected location. This enables real-time awareness, facilitating timely actions such as rest, descent, or medical support before symptoms worsen.
+
+By integrating accurate sensors and real-time feedback mechanisms, this system enhances safety, supports performance, and enables early intervention in high-risk, high-altitude environments.
  ## List of Sensors used
- - **ESP32**              : Main controller with Bluetooth + Wi-Fi
+- **ESP32**              : Main controller with Bluetooth + Wi-Fi
 - **MAX30102**            : Measures blood oxygen saturation and pulse rate
 - **MLX90614(IR)**        : Non-contact body temperature measurement
 - **BME280**              : Measures altitude and atmospheric pressure
