@@ -14,7 +14,7 @@ High-Altitude Health Monitoring – Continuous real-time monitoring of vital sig
 8. [Components Required with Bill of Materials](#components-required-with-bill-of-materials)
 9. [Working Code](#working-code)
 10. [Working Code for plotting](#for-plots)
-11. [Plots](#plots)
+11. [Testing Graphs](#testing-graphs)
 12. [Demonstration](#demonstration-video)
 13. [Indian Sensor Substitution Plan](#indian-sensor-substitution-plan)
 ## Overview
@@ -495,7 +495,7 @@ set(gca, 'FontSize', 12);
 xlim([0 max(time_hours)]);
 box on;
 ```
-## Plots
+## Testing Graphs
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Humidity%20vs%20Altitude.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/IRvalue_drift.png" alt="image" width="600" height="600"/>
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Pressure%20vs%20Altitude.png" alt="image" width="600" height="600"/>
