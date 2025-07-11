@@ -12,6 +12,9 @@ High-Altitude Health Monitoring – Continuous real-time monitoring of vital sig
 6. [Schematic Diagram](#schematic-diagram)
 7. [Circuit Connections & Pinout Table](#circuit-connections--pinout-table)
 8. [Components Required with Bill of Materials](#components-required-with-bill-of-materials)
+9. [Working Code](#working-code)
+10. [Working Code for plotting](#for-plots)
+11. [Plots](#plots)
 ## Overview
 High-altitude environments pose serious health risks due to low oxygen levels, decreased air pressure, and extreme weather conditions. Trekkers, mountaineers, pilots, and military personnel are particularly susceptible to altitude-related illnesses such as acute mountain sickness (AMS), high-altitude pulmonary edema (HAPE), high-altitude cerebral edema (HACE), hypoxia, severe fatigue, and decompression sickness. If not detected and managed early, these conditions can quickly become life-threatening.
 
@@ -491,15 +494,15 @@ xlim([0 max(time_hours)]);
 box on;
 ```
 ## Plots
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Humidity%20vs%20Altitude.png" alt="image" width="600" height="600"/>
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/IRvalue_drift.png" alt="image" width="600" height="600"/>
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Pressure%20vs%20Altitude.png" alt="image" width="600" height="600"/>
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Pressure_drift.png" alt="image" width="600" height="600"/>
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Temperature%20vs%20Altitude.png" alt="image" width="600" height="600"/>
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/Temperature_drift.png" alt="image" width="600" height="600"/>
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/altitude_drift.png" alt="image" width="600" height="600"/>
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/heartbeat_accuracy.png" alt="image" width="600" height="600"/>
-<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/humidity_drift.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Humidity%20vs%20Altitude.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/IRvalue_drift.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Pressure%20vs%20Altitude.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Pressure_drift.png" alt="image" width="600" height="600"/>
+<img src="http://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Temperature%20vs%20Altitude.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/Temperature_drift.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/altitude_drift.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/heartbeat_accuracy.png" alt="image" width="600" height="600"/>
+<img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/test_graphs/humidity_drift.png" alt="image" width="600" height="600"/>
 
 
 
