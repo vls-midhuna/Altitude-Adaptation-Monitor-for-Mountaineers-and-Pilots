@@ -517,7 +517,7 @@ https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-
    
  Some possible Indian sensor alternatives include:
 
-**SpO₂&Pulse:** Upcoming biosensors developed by BEL, DRDO, or Indian health-tech startups
+**SpO₂ & Pulse:** Upcoming biosensors developed by BEL, DRDO, or Indian health-tech startups
 
  **Temperature:** Analog thermistors or infrared sensors made by Indian electronics suppliers
  
