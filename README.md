@@ -1,5 +1,5 @@
 # Altitude Adaptation Monitor for Mountaineers and Pilots
-High-Altitude Health Monitoring – Continuous real-time monitoring of vital signs (pulse, body temperature) and environmental parameters (altitude, atmospheric pressure, humidity, and ambient temperature) to identify early signs of altitude sickness, hypoxia, and fatigue during ascent.
+High-Altitude Health Monitoring – Continuous real-time monitoring of vital signs (pulse, body temperature) and environmental parameters (altitude, atmospheric pressure, humidity, and ambient temperature) to identify early symptoms of altitude sickness, hypoxia, and fatigue during ascent.
 
 <img src="https://github.com/vls-midhuna/Altitude-Adaptation-Monitor-for-Mountaineers-and-Pilots/blob/main/product.png" alt="image" width="600" height="600"/>
 
@@ -18,7 +18,7 @@ High-Altitude Health Monitoring – Continuous real-time monitoring of vital sig
 12. [Demonstration](#demonstration-video)
 13. [Indian Sensor Substitution Plan](#indian-sensor-substitution-plan)
 ## Overview
-High-altitude environments pose serious health risks due to low oxygen levels, decreased air pressure, and extreme weather conditions. Trekkers, mountaineers, pilots, and military personnel are particularly susceptible to altitude-related illnesses such as acute mountain sickness (AMS), high-altitude pulmonary edema (HAPE), high-altitude cerebral edema (HACE), hypoxia, severe fatigue, and decompression sickness. If not detected and managed early, these conditions can quickly become life-threatening.
+High-altitude environments pose serious health risks due to low oxygen levels, decreased air pressure, and extreme weather conditions. Trekkers, mountaineers, pilots, and military personnel are particularly susceptible to altitude-related illnesses such as acute mountain sickness (AMS), high-altitude pulmonary edema (HAPE), high-altitude cerebral edema (HACE), and decompression sickness. If not detected and managed early, these conditions can quickly become life-threatening.
 
 The proposed solution is a compact, wearable health monitoring system that continuously tracks key physiological parameters and environmental conditions using the following sensors:
 - MAX30102 for heart rate monitoring
@@ -26,7 +26,7 @@ The proposed solution is a compact, wearable health monitoring system that conti
 - BME280 for altitude, atmospheric pressure, humidity, and environment temperature
 - The system also includes a 0.96-inch OLED display for real-time data visualization, allowing users to immediately view their vital signs and surrounding environmental conditions without needing an external device.
 
-The system helps detect early signs of:
+The system helps detect early symptoms of:
 - Hypoxia: Reflected through abnormal heart rate and body temperature fluctuations at increasing altitudes
 - Fatigue and Overexertion: Indicated by sustained elevated heart rate and rising body temperature
 - Decompression Sickness: Assessed by correlating sudden altitude changes with vital sign variations
