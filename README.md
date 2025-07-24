@@ -109,6 +109,8 @@ By integrating accurate sensors and real-time feedback mechanisms, this system e
 
 ## Working Code
 ```
+#include <MAX3010x.h>
+#include <filters.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <WiFi.h>
@@ -116,11 +118,59 @@ By integrating accurate sensors and real-time feedback mechanisms, this system e
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Adafruit_MLX90614.h>
-#include <MAX30105.h>
-#include <heartRate.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 
+//symptoms variables
+bool low_body_temperature = false;
+bool high_body_temperature = false;
+bool low_heart_rate = false;
+bool high_heart_rate = false;
+bool low_SPO2 = false;
+
+// Environment variables
+bool high_pressure = false;
+bool low_pressure = false;
+bool low_humidity = false;
+bool high_humidity = false;
+bool low_temperature = false;
+bool high_temperature = false;
+bool altitude_above_2500 = false;
+bool altitude_above_4267 = false;
+bool rate_of_ascent_stage1 = false;
+bool rate_of_ascent_stage2 = false;
+bool rate_of_descent_stage1 = false;
+bool rate_of_descent_stage2 = false;
+bool rate_of_excessive_pressure = false;
+bool rate_of_compressive_pressure = false;
+
+//for rate of change calculations
+int previous_time = 0;
+float previous_altitude_value = 0;
+float previous_pressure_value = 0;
+
+
+// Library instances
+MAX30105 sensor;
+
+const auto kSamplingRate = sensor.SAMPLING_RATE_400SPS;
+const float kSamplingFrequency = 400.0;
+
+// Finger Detection Threshold and Cooldown
+const unsigned long kFingerThreshold = 10000;
+const unsigned int kFingerCooldownMs = 500;
+
+// Edge Detection Threshold (decrease for MAX30100)
+const float kEdgeThreshold = -2000.0;
+
+// Filters
+const float kLowPassCutoff = 5.0;
+const float kHighPassCutoff = 0.5;
+
+// Averaging
+const bool kEnableAveraging = true;
+const int kAveragingSamples = 50;
+const int kSampleThreshold = 5;
 
 #define SCREEN_WIDTH 128  // OLED display width, in pixels
 #define SCREEN_HEIGHT 64  // OLED display height, in pixels
@@ -131,20 +181,21 @@ By integrating accurate sensors and real-time feedback mechanisms, this system e
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); 
 
 Adafruit_MLX90614 mlx = Adafruit_MLX90614();
-MAX30105 particleSensor;
+// MAX30105 particleSensor;
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 Adafruit_BME280 bme;
 
-int beatsperMin = 72;
-float beatsPerMinute,irValue;
-long lastBeat = 0;
-float temperature,Heart_Beat,IR_value;
-float pressure, altitude, humidity;
+float beatsPerMinute;
+float irValue,SPO2_value;
+float temperature;
+float Heart_Beat;
+float IR_value;
+float pressure, altitude, humidity,atm_temperature;
 
 //Put your SSID & Password/
-const char* ssid = "ssid";  // Enter SSID here
-const char* password = "password";  //Enter Password here
+const char* ssid = "vivo Y33T";  // Enter SSID here
+const char* password = "qwertyuiop";  //Enter Password here
 
 WebServer server(80); 
 
@@ -155,7 +206,7 @@ void setup() {
   Serial.println(ssid);
 
   WiFi.begin(ssid, password);
-
+// connecting to WIFI
   while (WiFi.status() != WL_CONNECTED) {
   delay(1000);
   Serial.print(".");
@@ -186,39 +237,318 @@ void setup() {
 		while (1);
 	};
 
-  if (!particleSensor.begin(Wire, I2C_SPEED_FAST)) //Use default I2C port, 400kHz speed
-  {
-    Serial.println("MAX30105 was not found. Please check wiring/power. ");
-    while (1);
-  }
-  Serial.println("Place your index finger on the sensor with steady pressure.");
-
-  particleSensor.setup(); //Configure sensor with default settings
-  particleSensor.setPulseAmplitudeRed(0x0A); //Turn Red LED to low to indicate sensor is running
-  particleSensor.setPulseAmplitudeGreen(0); //Turn off Green LED
-
   if (!bme.begin(0x76)) {
 		Serial.println("Could not find a valid BME280 sensor, check wiring!");
 		while (1);
 	}
 
+  if(sensor.begin() && sensor.setSamplingRate(kSamplingRate)) { 
+    Serial.println("Sensor initialized");
+  }
+  else {
+    Serial.println("Sensor not found");  
+    while(1);
+  }
+
  }
 
+// Filter Instances
+HighPassFilter high_pass_filter(kHighPassCutoff, kSamplingFrequency);
+LowPassFilter low_pass_filter_red(kLowPassCutoff, kSamplingFrequency);
+LowPassFilter low_pass_filter_ir(kLowPassCutoff, kSamplingFrequency);
+//LowPassFilter low_pass_filter(kLowPassCutoff, kSamplingFrequency);
+Differentiator differentiator(kSamplingFrequency);
+MovingAverageFilter<kAveragingSamples> averager_bpm;
+MovingAverageFilter<kAveragingSamples> averager_spo2;
+
+// Statistic for pulse oximetry
+MinMaxAvgStatistic stat_red;
+MinMaxAvgStatistic stat_ir;
+
+// R value to SpO2 calibration factors
+// See https://www.maximintegrated.com/en/design/technical-documents/app-notes/6/6845.html
+float kSpO2_A = 1.5958422;
+float kSpO2_B = -34.6596622;
+float kSpO2_C = 112.6898759;
+
+// Timestamp of the last heartbeat
+long last_heartbeat = 0;
+
+// Timestamp for finger detection
+long finger_timestamp = 0;
+bool finger_detected = false;
+
+// Last diff to detect zero crossing
+float last_diff = NAN;
+bool crossed = false;
+long crossed_time = 0;
+
  void loop() {
-  irValue = particleSensor.getIR();
+
+  auto sample = sensor.readSample(1000);
+  float current_value_red = sample.red;
+  float current_value_ir = sample.ir;
+  // Detect Finger using raw sensor value
+  if(sample.red > kFingerThreshold) {
+    if(millis() - finger_timestamp > kFingerCooldownMs) {
+      finger_detected = true;
+    }
+  }
+  else {
+    // Reset values if the finger is removed
+    differentiator.reset();
+    averager_bpm.reset();
+   // low_pass_filter.reset();
+    high_pass_filter.reset();
+    averager_spo2.reset();
+    low_pass_filter_red.reset();
+    low_pass_filter_ir.reset();
+    high_pass_filter.reset();
+    stat_red.reset();
+    stat_ir.reset();
+
+    finger_detected = false;
+    finger_timestamp = millis();
+  }
+
+  if(finger_detected) {
+    //current_value = low_pass_filter.process(current_value);
+    current_value_red = low_pass_filter_red.process(current_value_red);
+    current_value_ir = low_pass_filter_ir.process(current_value_ir);
+
+    // Statistics for pulse oximetry
+    stat_red.process(current_value_red);
+    stat_ir.process(current_value_ir);
+
+
+    float current_value = high_pass_filter.process(current_value_red);
+    float current_diff = differentiator.process(current_value);
+
+    // Valid values?
+    if(!isnan(current_diff) && !isnan(last_diff)) {
+      
+      // Detect Heartbeat - Zero-Crossing
+      if(last_diff > 0 && current_diff < 0) {
+        crossed = true;
+        crossed_time = millis();
+      }
+      
+      if(current_diff > 0) {
+        crossed = false;
+      }
+  
+      // Detect Heartbeat - Falling Edge Threshold
+      if(crossed && current_diff < kEdgeThreshold) {
+        if(last_heartbeat != 0 && crossed_time - last_heartbeat > 300) {
+          // Show Results
+          int bpm = 60000/(crossed_time - last_heartbeat);
+          float rred = (stat_red.maximum()-stat_red.minimum())/stat_red.average();
+          float rir = (stat_ir.maximum()-stat_ir.minimum())/stat_ir.average();
+          float r = rred/rir;
+          float spo2 = kSpO2_A * r * r + kSpO2_B * r + kSpO2_C;
+          
+          if(bpm > 50 && bpm < 250) {
+            // Average?
+            if(kEnableAveraging) {
+              int average_bpm = averager_bpm.process(bpm);
+              int average_spo2 = averager_spo2.process(spo2);
+
+              // Show if enough samples have been collected
+              if(averager_bpm.count() > kSampleThreshold) {
+                Serial.print("Heart Rate (avg, bpm): ");
+                Serial.println(average_bpm);
+                beatsPerMinute = average_bpm;
+                Serial.print("SpO2 (avg, %): ");
+                Serial.println(average_spo2);
+                SPO2_value = average_spo2;
+              }
+            }
+            else {
+              Serial.print("Heart Rate (current, bpm): ");
+              Serial.println(bpm);  
+              Serial.print("SpO2 (current, %): ");
+              Serial.println(spo2); 
+            }
+          }
+           // Reset statistic
+          stat_red.reset();
+          stat_ir.reset();
+
+        }
+  
+        crossed = false;
+        last_heartbeat = crossed_time;
+      }
+    }
+
+    last_diff = current_diff;
+  }
+
+  // irValue = particleSensor.getIR();
   pressure = bme.readPressure() / 100.0F;
   altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
   humidity = bme.readHumidity();
-  //atm_temperature = bme.readTemperature();
+  atm_temperature = bme.readTemperature();
   temperature = mlx.readObjectTempF();
-  if (checkForBeat(irValue) == true)
-  {
-    //We sensed a beat!
-    long delta = millis() - lastBeat;
-    lastBeat = millis();
 
-    beatsPerMinute = 60 / (delta / 1000.0);
+  //setting up the conditions
+  //High Heart Beat
+  if (beatsPerMinute > 120){
+    high_heart_rate = true;
   }
+  else{
+    high_heart_rate = false;
+  }
+  //Low Heart Beat
+  if (beatsPerMinute < 55 ){
+    low_heart_rate = true;
+  }
+  else{
+    low_heart_rate = false;
+  }
+  //Low Temperature
+  if(temperature < 97){
+    low_body_temperature = true;
+  }
+  else{
+    low_body_temperature = false;
+  }
+
+  //High Temperature
+  if(temperature > 99.5 ){
+    high_body_temperature = true;
+  }
+  else{
+    high_body_temperature = false;
+  }
+  
+  //Low SPO2
+  if(SPO2_value < 92){
+    low_SPO2 = true;
+  }
+
+  //Low Pressure
+  if ( pressure < 1010){
+    low_pressure = true;
+  }
+  else{
+    low_pressure = false;
+  }
+
+  // High pressure
+  if ( pressure > 1020){
+    high_pressure = true;
+  }
+  else{
+    high_pressure = false;
+  }
+  //Low humidity
+  if ( humidity <= 30){
+    low_humidity = true;
+  }
+  else{
+    low_humidity = false;
+  }
+
+  //High Humidity
+  if(humidity > 50 ){
+    high_humidity = true;
+  }
+  else{
+    high_humidity = false;
+  }
+  //Low atmosphere temperature
+  if( atm_temperature < 20 ){
+    low_temperature = true;
+  }
+  else{
+    low_temperature = false;
+  }
+
+  //High atmosphere Temperature
+  if(atm_temperature > 32){
+    high_temperature = true;
+  }
+  else{
+    high_temperature = false;
+  }
+
+  //altitude_parameters
+  if(altitude >= 2500 && altitude < 4267){
+    altitude_above_2500 = true;
+    altitude_above_4267 = false;
+  }
+  else if(altitude >= 4267){
+    altitude_above_2500 = false;
+    altitude_above_4267 = true;
+  }
+  else{
+    altitude_above_2500 = false;
+    altitude_above_4267 = false;
+  }
+  // for 12 hour timing calculation
+  if(millis()- previous_time >= 43200000){
+    previous_time = millis();
+    previous_pressure_value = pressure;
+    previous_altitude_value = altitude;
+  }
+  //excessive pressure condition
+  if(pressure - previous_pressure_value >= 9){
+    rate_of_excessive_pressure = true;
+  }
+  else{
+    rate_of_excessive_pressure = false;
+  }
+  //compressive pressure condition
+  if ( previous_pressure_value - pressure >= 9 ){
+    rate_of_compressive_pressure = true;
+  }
+  else{
+    rate_of_compressive_pressure = false;
+  }
+
+  //altitude ascent rate
+  if(altitude_above_2500){
+    if(altitude - previous_altitude_value >= 900 ){
+      rate_of_ascent_stage1 = true;
+    }
+    else{
+      rate_of_ascent_stage1 = false;
+    }
+    if(previous_altitude_value - altitude >=900){
+      rate_of_descent_stage1 = true;
+    }
+    else{
+      rate_of_descent_stage1 = false;
+    }
+  }
+
+
+  if(altitude_above_4267){
+    if(altitude - previous_altitude_value >= 450 ){
+      rate_of_ascent_stage2 = true;
+    }
+    else{
+      rate_of_ascent_stage2 = false;
+    }
+    if(previous_altitude_value - altitude >=450){
+      rate_of_descent_stage2 = true;
+    }
+    else{
+      rate_of_descent_stage2 = false;
+    }
+  }
+
+
+  //irValue = current_value;
+  // if (checkForBeat(irValue) == true)
+  // {
+  //   //We sensed a beat!
+  //   long delta = millis() - lastBeat;
+  //   lastBeat = millis();
+
+  //   beatsPerMinute = 60 / (delta / 1000.0);
+  // }
    // Display Text
   display.setTextSize(1);
   display.setTextColor(WHITE);
@@ -229,8 +559,8 @@ void setup() {
   display.print("Heart Beat= ");
   display.print(beatsPerMinute);
   display.println(" bpm");
-  display.print("IR value= ");
-  display.println(irValue);
+  display.print("SPO2= ");
+  display.println(SPO2_value);
   display.print("Pressure= ");
   display.print(pressure);
   display.println(" hPa");
@@ -240,10 +570,10 @@ void setup() {
   display.print("Humidity= ");
   display.print(humidity);
   display.println(" %");
-  if (beatsPerMinute > 120 || beatsPerMinute < 55 || temperature > 100.5 || temperature < 97){
-    display.println("Alert");
-    display.println("Vitals are dropping.");
-  }
+  // if (beatsPerMinute > 120 || beatsPerMinute < 55 || temperature > 100.5 || temperature < 97){
+  //   display.println("Alert");
+  //   display.println("Vitals are dropping.");
+  // }
   display.display();
   
   display.clearDisplay();
@@ -266,16 +596,16 @@ void setup() {
 void handle_OnConnect() {
   Heart_Beat = beatsPerMinute;
   IR_value = irValue;
-  server.send(200, "text/html", SendHTML(temperature,Heart_Beat,IR_value,pressure, altitude, humidity)); 
+  server.send(200, "text/html", SendHTML(temperature,Heart_Beat,SPO2_value,pressure, altitude, humidity)); 
 }
 
 void handle_NotFound(){
   server.send(404, "text/plain", "Not found");
 }
 
-String SendHTML(float temperature,float Heart_Beat,float IR_value,float pressure,float altitude,float humidity){
+String SendHTML(float temperature,float Heart_Beat,float SPO2_value,float pressure,float altitude,float humidity){
   String ptr = "<!DOCTYPE html> <html>\n";
-  ptr +="<head><meta http-equiv=\"refresh\" content=\"1\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
+  ptr +="<head><meta http-equiv=\"refresh\" content=\"10\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
   ptr +="<title>Altitude adaptation monitor</title>\n";
   ptr +="<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">";
   ptr +="<style>";
@@ -341,8 +671,8 @@ String SendHTML(float temperature,float Heart_Beat,float IR_value,float pressure
   ptr +="<div class=\"row\"><div class=\"label\"><i class=\"fas fa-heartbeat\"></i> Heart Beat:</div><div><span id=\"heartbeat\">";
   ptr +=Heart_Beat;
   ptr +="</span> bpm</div></div>";
-  ptr +="<div class=\"row\"><div class=\"label\"><i class=\"fas fa-wave-square\"></i> IR Value:</div><div><span id=\"irvalue\">";
-  ptr +=IR_value;
+  ptr +="<div class=\"row\"><div class=\"label\"><i class=\"fas fa-wave-square\"></i> SPO2 :</div><div><span id=\"spo2\">";
+  ptr +=SPO2_value;
   ptr +="</span></div></div>";
   ptr +="</div>";
   ptr +="<div class=\"section\">";
@@ -356,21 +686,83 @@ String SendHTML(float temperature,float Heart_Beat,float IR_value,float pressure
   ptr +=humidity;
   ptr +="</span> %</div></div>";
   ptr +="</div>";
-  ptr +="<script>";
-  ptr +="let temperatureF = temperature, isFahrenheit = true;";
-  ptr +="function toggleTemperature() {";
-  ptr +="const temp = document.getElementById('temperature');";
-  ptr +="const unit = document.getElementById('tempUnit');";
-  ptr +="if (isFahrenheit) {";
-  ptr +="temp.textContent = ((temperatureF - 32) * 5/9).toFixed(1);";
-  ptr +="unit.textContent = '°C';";
-  ptr +="} else {";
-  ptr +="temp.textContent = temperatureF.toFixed(1);";
-  ptr +="unit.textContent = '°F';";
-  ptr +="}";
-  ptr +="isFahrenheit = !isFahrenheit;";
-  ptr +="}";
-  ptr +="</script>\n";
+  // ptr +="<label>";
+  // ptr +="<input type=\"checkbox\" id=\"fatigue\">hi";
+  // ptr +="</label>";
+  // ptr +="<div id=\"hypoxia\">balaji </div>";
+  // ptr +="<div id=\"fatigue1\">hi </div>";
+  // ptr +="<div id=\"ams\"> </div>";
+  // ptr +="<div id=\"hace\"> </div>";
+  // ptr +="<div id=\"hape\"> </div>";
+  // ptr +="<div id=\"decompression_sickness\"> </div>";
+  //ptr +="<script>";
+  // ptr +="let temperatureF = temperature, isFahrenheit = true;";
+  // ptr +="function toggleTemperature() {";
+  // ptr +="const temp = document.getElementById('temperature');";
+  // ptr +="const unit = document.getElementById('tempUnit');";
+  // ptr +="if (isFahrenheit) {";
+  // ptr +="temp.textContent = ((temperatureF - 32) * 5/9).toFixed(1);";
+  // ptr +="unit.textContent = '°C';";
+  // ptr +="} else {";
+  // ptr +="temp.textContent = temperatureF.toFixed(1);";
+  // ptr +="unit.textContent = '°F';";
+  // ptr +="}";
+  // ptr +="isFahrenheit = !isFahrenheit;";
+  // ptr +="}";
+  // ptr +="</script><script>";
+  // ptr +="const toggleBox = document.getElementById(\"fatigue\");";
+  // ptr +="const extraText = document.getElementById(\"hypoxia\");";
+  // ptr +="toggleBox.addEventListener(\"change\", function() {";
+  // ptr +="extraText.style.display = this.checked ? \"block\" : \"none\";";
+  // ptr +="});";
+  //fatigue conditions
+  if ( high_body_temperature == true && low_SPO2 ==true && high_heart_rate == true  ){
+    ptr += "<p> Your symptoms indicate fatigue condition. So please take some rest. </p>";
+  }
+
+  //hypoxia
+  if ( high_heart_rate == true && low_SPO2 ==true){
+    ptr += "<p> Your symptoms indicate Hypoxia condition.If you are having diziness \n please consult a nearby medical care </p>";
+  }
+
+  if(rate_of_ascent_stage1 == true  ){
+    ptr += "<p> As per your altitude your rate of altitude ascent is high.Please slow down for better condition adaptation and take atleast a day break for 3 days. </p>";
+  }
+
+  if(rate_of_ascent_stage2 == true  ){
+    ptr += "<p> As per your altitude your rate of altitude ascent is high.Please slow down for better condition adaptation and take atleast a 2-day break for every 1000m ascent. </p>";
+  }
+
+  if(rate_of_descent_stage1 == true  ){
+    ptr += "<p> As per your altitude your rate of altitude descent is high.Please slow down for better condition adaptation and take atleast a day break for 3 days. </p>";
+  }
+
+  if(rate_of_descent_stage2 == true  ){
+    ptr += "<p> As per your altitude your rate of altitude descent is high.Please slow down for better condition adaptation and take atleast a 2-day break for every 1000m descent. </p>";
+  }
+
+  if(rate_of_compressive_pressure == true && high_heart_rate == true && low_SPO2 ==true ){
+    ptr +="<p>Your present environment conditions indicate Decompression Sickness. Please consult a nearby medical support.</p>";
+  }
+
+  if ( high_heart_rate == true && low_SPO2 ==true && rate_of_ascent_stage1 == true || rate_of_ascent_stage2 == true ){
+    ptr += "<p> Your symptoms indicate Acute Mountain Sickness condition. </p>";
+    ptr +="<p> This may lead to  High Altitude Pulminary Edema if breathing gets difficult./n This may lead to  High Altitude Cerebral Edema if you are having headache. </p>";
+  }
+  
+  if(low_heart_rate ==true && low_SPO2 == true){
+    ptr +="<p> Please place your finger at the sensor. </p>";
+  }
+  
+  // ptr +="";
+  // ptr +="";
+  // ptr +="";
+  // ptr +="";
+  // ptr +="";
+  // ptr +="";
+  // ptr +="";
+  // ptr +="";
+ // ptr +="</script>\n";
   ptr +="</body>\n";
   ptr +="</html>\n";
   return ptr;
